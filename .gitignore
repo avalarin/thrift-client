@@ -53,3 +53,7 @@ jspm_packages
 # End of https://www.gitignore.io/api/
 
 .vscode
+release
+app/dist
+app/app.js
+*.js.map

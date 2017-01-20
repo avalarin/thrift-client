@@ -8,8 +8,15 @@
   "scripts": {
     "start": "electron ./app",
     "hot-server": "NODE_ENV=development node --max_old_space_size=2096 -r babel-register server.js",
-    "start-hot": "HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/app.js",
-    "dev": "npm run hot-server -- --start-hot"
+    "start-hot": "HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/app.development.js",
+    "dev": "npm run hot-server -- --start-hot",
+    "build-main": "NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
+    "build-renderer": "NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
+    "build": "npm run build-main && npm run build-renderer",
+    "package": "npm run build && build --publish never",
+    "package-win": "npm run build && build --win --x64",
+    "package-linux": "npm run build && build --linux",
+    "package-all": "npm run build && build -mwl"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
@@ -33,13 +40,42 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.18.0",
+    "babili-webpack-plugin": "0.0.7",
     "electron": "^1.4.15",
+    "electron-builder": "^11.4.4",
     "eslint-formatter-pretty": "^1.1.0",
     "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.26.0",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.15.0",
     "webpack-merge": "^2.4.0",
     "webpack-validator": "^2.3.0"
+  },
+  "build": {
+    "productName": "ThriftClient",
+    "appId": "net.avalarin.ThriftClient",
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "files": [
+      "dist/",
+      "node_modules/",
+      "app.html",
+      "app.js",
+      "app.js.map",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    }
+  },
+  "bin": {
+    "electron": "./node_modules/.bin/electron"
   }
 }

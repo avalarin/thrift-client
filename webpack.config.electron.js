@@ -1,8 +1,8 @@
-import webpack from 'webpack';
-import validate from 'webpack-validator';
-import merge from 'webpack-merge';
-import BabiliPlugin from 'babili-webpack-plugin';
-import baseConfig from './webpack.config';
+import webpack from 'webpack'
+import validate from 'webpack-validator'
+import merge from 'webpack-merge'
+import BabiliPlugin from 'babili-webpack-plugin'
+import baseConfig from './webpack.config'
 
 export default validate(merge(baseConfig, {
   devtool: 'source-map',
@@ -20,7 +20,7 @@ export default validate(merge(baseConfig, {
     // Add source map support for stack traces in node
     // https://github.com/evanw/node-source-map-support
     // new webpack.BannerPlugin(
-    //   'require("source-map-support").install();',
+    //   'require("source-map-support").install()',
     //   { raw: true, entryOnly: false }
     // ),
     new webpack.DefinePlugin({
@@ -45,4 +45,4 @@ export default validate(merge(baseConfig, {
     __dirname: false,
     __filename: false
   },
-}));
+}))

@@ -1,0 +1,6 @@
+{
+    "name": "thrift-client",
+    "version": "1.0.0",
+    "description": "Thrift client based on Electron, React, etc.",
+    "main": "./app.js"
+}

@@ -20,6 +20,8 @@ app.on('ready', () => {
     mainWindow.focus()
   })
 
+  mainWindow.openDevTools();
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })

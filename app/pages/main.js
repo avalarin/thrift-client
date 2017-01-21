@@ -5,6 +5,8 @@ import ServiceSelect from '~/components/services/ServiceSelect'
 export default class Main extends React.Component {
   render() {
     return <div>
+      <ServiceSelect />
+      <LoadServicesModal />
     </div>
   }
 }

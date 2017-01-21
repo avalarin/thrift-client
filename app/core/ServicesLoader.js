@@ -1,16 +1,59 @@
 import path from 'path'
 import fs from 'fs'
+import os from 'os'
+import mkdirp from 'mkdirp'
 import { flatMap } from '../utils/asyncee'
 import recursive from 'recursive-readdir'
+import { exec } from 'child_process'
+import guid from 'guid'
 
 const serviceRegex = /^\s*service ([^\s]+)/g
 
 export default class ServicesLoader {
-    list(baseDir) {
-        return this._listThriftFiles(baseDir)
+    getDescription(service) {
+        return new Promise((resolve, reject) => {
+            let baseDir = service.source; // getBaseDir();
+            let targetDir = path.join(os.tmpdir(), 'thrift-client', guid.raw())
+            let targetName = path.basename(service.file, path.extname(service.file)) + '.json'
+            let targetPath = path.join(targetDir, targetName)
+
+            let cmd = `thrift --gen json:merge --out ${targetDir} -I ${baseDir} ${service.file}`
+
+            mkdirp(targetDir, (err) => {
+                if (err) reject(err)
+                else generate();
+            })
+
+            function generate() {
+                console.log(`generating client (${cmd}) into ${targetPath}`)
+                exec(cmd, {}, (err, stdout, stderr) => {
+                    if (err) {
+                        console.log(`thrift stdout: ${stdout}`);
+                        console.error(`thrift stderr: ${stderr}`);
+                        reject(`thrift exited with error`);
+                    }
+
+                    fs.readFile(targetPath, 'utf8', (err, data) => {
+                        if (err) return reject(err);
+                        let description;
+                        try {
+                            description = JSON.parse(data);
+                        } catch (err) {
+                            reject(err);
+                        }
+
+                        resolve(description);
+                    });
+                });
+            }
+        })
+    }
+
+    list(source) {
+        return this._listThriftFiles(source)
             .then(list => flatMap(list, this._getServices))
             .then(list => list.map(i => {
-                i.file = path.relative(baseDir, i.file)
+                i.source = source
                 return i
             }))
     }

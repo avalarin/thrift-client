@@ -1,5 +1,6 @@
 import React from 'react'
 import LoadServicesModal from '~/components/services/LoadServicesModal'
+import EditServiceModal from '~/components/services/EditServiceModal'
 import ServiceSelect from '~/components/services/ServiceSelect'
 
 export default class Main extends React.Component {
@@ -7,6 +8,7 @@ export default class Main extends React.Component {
     return <div>
       <ServiceSelect />
       <LoadServicesModal />
+      <EditServiceModal />
     </div>
   }
 }

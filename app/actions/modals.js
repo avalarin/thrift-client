@@ -5,3 +5,6 @@ export const HIDE_MODAL = 'HIDE_MODAL'
 
 export const showModal = createAction(SHOW_MODAL)
 export const hideModal = createAction(HIDE_MODAL)
+
+export const LOAD_SERVICES_MODAL = 'loadServices'
+export const EDIT_SERVICE_MODAL = 'editService'

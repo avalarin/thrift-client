@@ -53,7 +53,7 @@ export default class ServicesLoader {
         return this._listThriftFiles(source)
             .then(list => flatMap(list, this._getServices))
             .then(list => list.map(i => {
-                i.source = source
+                i.origin = source
                 return i
             }))
     }
@@ -69,7 +69,7 @@ export default class ServicesLoader {
                 let match = serviceRegex.exec(line)
                 if (match) {
                     services.push({
-                        file: file,
+                        source: file,
                         name: match[1]
                     })
                 }

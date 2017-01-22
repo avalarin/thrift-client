@@ -5,9 +5,9 @@ import { showModal } from '~/actions/modals'
 const ServiceSelect = ({ services, onAdd }) => (
     <div>
         <select className="form-select">
-            { services.map((service, i) => <option>{service.name}</option>) }
+            { services.map((service, i) => <option key={`service-${i}`}>{service.name}</option>) }
         </select>
-        <button className="btn" onClick={onAdd}>add</button>
+        <button className="btn" onClick={onAdd}>Add</button>
     </div>
 )
 

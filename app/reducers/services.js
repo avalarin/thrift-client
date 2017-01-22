@@ -3,6 +3,7 @@ import { handleActions } from 'redux-actions'
 // import * as actions from '../actions/services'
 
 export default handleActions({
+    SET_SERVICES: (state, action) => state.set('list', fromJS(action.payload)),
     SAVE_SELECTED_TEMP_SERVICES: (state, action) => {
         let selectedIndex = state.getIn(['temp', 'selected'])
         let selected = state.getIn(['temp', 'list', selectedIndex])

@@ -4,6 +4,8 @@ import { showModal, hideModal, EDIT_SERVICE_MODAL } from '~/actions/modals'
 
 const servicesLoader = new ServicesLoader();
 
+export const SET_SERVICES = 'SET_SERVICES'
+
 export const BEGIN_LOADING_TEMP_SERVICES = 'BEGIN_LOADING_TEMP_SERVICES'
 export const COMPLETE_LOADING_TEMP_SERVICES = 'COMPLETE_LOADING_TEMP_SERVICES'
 export const SELECT_TEMP_SERVICE = 'SELECT_TEMP_SERVICE'
@@ -12,6 +14,8 @@ export const SET_TEMP_URL = 'SET_TEMP_URL'
 export const EDIT_SERVICE = 'EDIT_SERVICE'
 export const SAVE_EDITED_SERVICE = 'SAVE_EDITED_SERVICE'
 export const SET_EDITING_SERVICE_FIELD = 'SET_EDITING_SERVICE_FIELD'
+
+export const setServices = createAction(SET_SERVICES)
 
 export const beginLoadingTempServices = createAction(BEGIN_LOADING_TEMP_SERVICES)
 export const complateLoadingTempServices = createAction(COMPLETE_LOADING_TEMP_SERVICES)

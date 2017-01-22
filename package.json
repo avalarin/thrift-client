@@ -8,7 +8,7 @@
   "scripts": {
     "start": "electron ./app",
     "hot-server": "NODE_ENV=development node --max_old_space_size=2096 -r babel-register server.js",
-    "start-hot": "HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/app.development.js",
+    "start-hot": "HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/",
     "dev": "npm run hot-server -- --start-hot",
     "build-main": "NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
     "build-renderer": "NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
@@ -21,6 +21,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "classnames": "^2.2.5",
+    "electron-settings": "^2.2.2",
     "font-awesome": "^4.7.0",
     "guid": "0.0.12",
     "immutable": "^3.8.1",

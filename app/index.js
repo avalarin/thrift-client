@@ -10,7 +10,7 @@ import configureStore from './store'
 
 import Main from './pages/main'
 
-const store = configureStore({})
+const store = configureStore()
 
 window.store = store
 

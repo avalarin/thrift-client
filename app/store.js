@@ -9,8 +9,6 @@ settings.defaults({
   services: []
 });
 
-const loggerMiddleware = createLogger()
-
 const configMiddleware = store => next => action => {
     let result = next(action)
 
@@ -21,7 +19,7 @@ const configMiddleware = store => next => action => {
     return result
 }
 
-let middlewares = applyMiddleware(thunkMiddleware, loggerMiddleware, configMiddleware)
+let middlewares = applyMiddleware(thunkMiddleware, configMiddleware)
 
 if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
     middlewares = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(middlewares)

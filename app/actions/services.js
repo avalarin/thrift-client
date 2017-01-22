@@ -5,6 +5,7 @@ import { showModal, hideModal, EDIT_SERVICE_MODAL } from '~/actions/modals'
 const servicesLoader = new ServicesLoader();
 
 export const SET_SERVICES = 'SET_SERVICES'
+export const SELECT_SERVICE = 'SELECT_SERVICE'
 
 export const BEGIN_LOADING_TEMP_SERVICES = 'BEGIN_LOADING_TEMP_SERVICES'
 export const COMPLETE_LOADING_TEMP_SERVICES = 'COMPLETE_LOADING_TEMP_SERVICES'
@@ -16,6 +17,7 @@ export const SAVE_EDITED_SERVICE = 'SAVE_EDITED_SERVICE'
 export const SET_EDITING_SERVICE_FIELD = 'SET_EDITING_SERVICE_FIELD'
 
 export const setServices = createAction(SET_SERVICES)
+export const selectService = createAction(SELECT_SERVICE)
 
 export const beginLoadingTempServices = createAction(BEGIN_LOADING_TEMP_SERVICES)
 export const complateLoadingTempServices = createAction(COMPLETE_LOADING_TEMP_SERVICES)
@@ -39,6 +41,14 @@ export function editService(service) {
     return (dispatch) => {
         dispatch(showModal(EDIT_SERVICE_MODAL))
         dispatch(editServiceInternal(service))
+    }
+}
+export function editSelectedService() {
+    return (dispatch, getState) => {
+        let state = getState().services
+        let selectedIndex = state.getIn(['selected'])
+        let selected = state.getIn(['list', selectedIndex])
+        dispatch(editService({ service: selected, type: 'exist', index: selectedIndex }))
     }
 }
 export function editSelectedTempService() {

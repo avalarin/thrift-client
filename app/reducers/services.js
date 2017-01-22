@@ -3,7 +3,10 @@ import { handleActions } from 'redux-actions'
 // import * as actions from '../actions/services'
 
 export default handleActions({
-    SET_SERVICES: (state, action) => state.set('list', fromJS(action.payload)),
+    SET_SERVICES: (state, action) => state.set('list', fromJS(action.payload)
+                                          .set('selected', 0)),
+    SELECT_SERVICE: (state, action) => state.set('selected', action.payload.index),
+
     SAVE_SELECTED_TEMP_SERVICES: (state, action) => {
         let selectedIndex = state.getIn(['temp', 'selected'])
         let selected = state.getIn(['temp', 'list', selectedIndex])
@@ -35,7 +38,7 @@ export default handleActions({
         }
     }
 }, fromJS({ 
-    list: [ ], 
+    list: [ ], selected: 0,
     temp: { loading: false, list: [ ], error: null, selected: null, url: "/home/aprokopev/Desktop/thrift-models/thrift" },
     edit: { service: { source: '', name: '', server: '' }, index: null, type: null }
 }))

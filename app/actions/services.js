@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions'
 import ServicesLoader from '~/core/ServicesLoader'
 import { showModal, hideModal, EDIT_SERVICE_MODAL } from '~/actions/modals'
+import { addItem, SERVICE_TABS } from '~/actions/lists'
 
 const servicesLoader = new ServicesLoader();
 
@@ -66,3 +67,12 @@ export function saveEditedService() {
     }
 }
 export const setEditingServiceField = createAction(SET_EDITING_SERVICE_FIELD)
+
+export function createTabForSelectedService() {
+    return (dispatch, getState) => {
+        let state = getState().services
+        let selectedIndex = state.getIn(['selected'])
+        let selected = state.getIn(['list', selectedIndex]).toJS()
+        dispatch(addItem({ list: SERVICE_TABS, item: { service: selected, name: selected.name }}))
+    }
+}

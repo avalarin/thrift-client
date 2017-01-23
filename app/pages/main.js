@@ -14,7 +14,9 @@ const styles = {
         marginBottom: '5px'
     }
 }
-class MainPage extends React.Component {
+
+@jss(styles)
+export default class MainPage extends React.Component {
     render() {
         let { sheet: { classes } } = this.props
 
@@ -29,5 +31,3 @@ class MainPage extends React.Component {
         </div>
     }
 }
-
-export default jss(styles)(MainPage)

@@ -3,6 +3,7 @@
     "plugins": [
         ["babel-root-import", {
             "rootPathSuffix": "app"
-        }]
+        }],
+        "transform-decorators-legacy"
     ]
 }

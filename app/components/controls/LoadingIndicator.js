@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import jss from 'react-jss'
+import { React, connect, jss } from '~/deps'
 
 const styles = {
     indicator: {
@@ -25,7 +24,8 @@ const styles = {
     }
 }
 
-class LoadingIndicator extends Component {
+@jss(styles)
+export default class LoadingIndicator extends React.Component {
     render() {
         const { visible = true, sheet: {classes} } = this.props
         if (!visible) return null
@@ -36,5 +36,3 @@ class LoadingIndicator extends Component {
         </div>
     }
 }
-
-export default jss(styles)(LoadingIndicator)

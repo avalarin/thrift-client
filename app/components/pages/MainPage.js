@@ -1,10 +1,9 @@
-import React from 'react'
+import { React, connect, jss } from '~/deps'
 import LoadServicesModal from '~/components/services/LoadServicesModal'
 import EditServiceModal from '~/components/services/EditServiceModal'
 import ServiceSelect from '~/components/services/ServiceSelect'
 import Tabs from '~/components/controls/Tabs'
 import classnames from 'classnames'
-import jss from 'react-jss'
 
 const styles = {
     page: {

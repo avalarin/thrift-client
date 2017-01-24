@@ -1,14 +1,17 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import { React, connect, jss } from '~/deps'
 
 const styles = { }
 
-const Sender = () => {
+const mapStateToProps = (state, ownProps) => ({
+    tabs: lists.getItems(state, ownProps.list)
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onSelect: (index) => dispatch(selectItem({ list: ownProps.list, index }))
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
+@jss(styles)
+export default const Sender = () => {
 
 }
-
-export default connect((state, ownProps) => ({
-    tabs: lists.getItems(state, ownProps.list)
-}), (dispatch, ownProps) => ({
-    onSelect: (index) => dispatch(selectItem({ list: ownProps.list, index }))
-}))(jss(styles)(Tabs))

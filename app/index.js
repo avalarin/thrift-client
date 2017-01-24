@@ -8,7 +8,7 @@ import 'primer-css/build/index'
 
 import configureStore from './store'
 
-import Main from './pages/main'
+import MainPage from './components/pages/MainPage'
 
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].forEach(devtools => {
@@ -23,7 +23,7 @@ window.store = store
 
 render(
   <Provider store={store}>
-    <Main />
+    <MainPage />
   </Provider>, 
   document.getElementById('app')
 )

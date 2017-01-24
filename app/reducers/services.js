@@ -1,31 +1,39 @@
 import { Map, List, fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
-// import * as actions from '../actions/services'
 
 export default handleActions({
-    SET_SERVICES: (state, action) => state.set('list', fromJS(action.payload)
-                                          .set('selected', 0)),
-    SELECT_SERVICE: (state, action) => state.set('selected', action.payload.index),
+    SET_SERVICES: function (state, action) {
+        return state.merge(fromJS({ list: action.payload, selected: 0 }))
+    },
+    SELECT_SERVICE: function (state, action) {
+        return state.set('selected', action.payload.index)  
+    },
 
-    SAVE_SELECTED_TEMP_SERVICES: (state, action) => {
+    SAVE_SELECTED_TEMP_SERVICES: function (state, action) {
         let selectedIndex = state.getIn(['temp', 'selected'])
         let selected = state.getIn(['temp', 'list', selectedIndex])
         return state.update('list', (services) => services.push(selected))
     },
-    BEGIN_LOADING_TEMP_SERVICES: (state, action) => state.setIn(['temp', 'loading'], true)
-                                                         .setIn(['temp', 'list'], List())
-                                                         .setIn(['temp', 'error'], null)
-                                                         .setIn(['temp', 'selected'], ),
-    COMPLETE_LOADING_TEMP_SERVICES: (state, action) => state.setIn(['temp', 'loading'], false)
-                                                            .setIn(['temp', 'list'], List(action.payload.items))
-                                                            .setIn(['temp', 'error'], action.payload.error)  
-                                                            .setIn(['temp', 'selected'], 0),
-    SET_TEMP_URL: (state, action) => state.setIn(['temp', 'url'], action.payload),
-    SELECT_TEMP_SERVICE: (state, action) => state.setIn(['temp', 'selected'], action.payload),
+    BEGIN_LOADING_TEMP_SERVICES: function (state, action) {
+        return state.mergeIn(['temp'], fromJS({loading: true, list: [], error: null, selected: 0}))
+    },
+    COMPLETE_LOADING_TEMP_SERVICES: function (state, { payload: { items, error } }) {
+        return state.mergeIn(['temp'], fromJS({loading: false, list: items, error: error, selected: 0}))
+    },
+    SET_TEMP_URL: function (state, action) {
+        return state.setIn(['temp', 'url'], action.payload)
+    },
+    SELECT_TEMP_SERVICE: function (state, action) { 
+        return state.setIn(['temp', 'selected'], action.payload)
+    },
 
-    EDIT_SERVICE: (state, action) => state.mergeIn(['edit'], fromJS({ service: action.payload.service, index: action.payload.index, type: action.payload.type })),
-    SET_EDITING_SERVICE_FIELD: (state, action) => state.setIn(['edit', 'service', action.payload.field], action.payload.value),
-    SAVE_EDITED_SERVICE: (state, action) => {
+    EDIT_SERVICE: function (state, action) {
+        return state.mergeIn(['edit'], fromJS({ service: action.payload.service, index: action.payload.index, type: action.payload.type })) 
+    },
+    SET_EDITING_SERVICE_FIELD: function (state, action) {
+        return state.setIn(['edit', 'service', action.payload.field], action.payload.value)
+    },
+    SAVE_EDITED_SERVICE: function (state, action) {
         let edit = state.get('edit')
         let service = edit.get('service').toJS()
         let index = edit.get('index')
@@ -39,6 +47,6 @@ export default handleActions({
     }
 }, fromJS({ 
     list: [ ], selected: 0,
-    temp: { loading: false, list: [ ], error: null, selected: null, url: "/home/aprokopev/Desktop/thrift-models/thrift" },
+    temp: { loading: false, list: [ ], error: null, selected: null, url: "" },
     edit: { service: { source: '', name: '', server: '' }, index: null, type: null }
 }))

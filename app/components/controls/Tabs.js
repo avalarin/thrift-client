@@ -1,17 +1,27 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import { React, connect, jss } from '~/deps'
 import * as lists from '~/selectors/lists'
 import { selectItem } from '~/actions/lists'
 import classnames from 'classnames'
-import jss from 'react-jss'
 
 const styles = {
     content: {
         margin: '5px'
     }
- }
+}
 
-class Tabs extends React.Component {
+const mapStateToProps = (state, ownProps) => ({
+    tabs: lists.getItems(state, ownProps.list),
+    selectedIndex: lists.getSelectedIndex(state, ownProps.list),
+    selected: lists.getSelectedItem(state, ownProps.list)
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onSelect: (index) => dispatch(selectItem({ list: ownProps.list, index }))
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
+@jss(styles)
+export default class Tabs extends React.Component {
     renderTab(tab, index) {
         let cn = classnames({
             'tabnav-tab': true,
@@ -37,11 +47,3 @@ class Tabs extends React.Component {
         </div>
     }
 }
-
-export default connect((state, ownProps) => ({
-    tabs: lists.getItems(state, ownProps.list),
-    selectedIndex: lists.getSelectedIndex(state, ownProps.list),
-    selected: lists.getSelectedItem(state, ownProps.list)
-}), (dispatch, ownProps) => ({
-    onSelect: (index) => dispatch(selectItem({ list: ownProps.list, index }))
-}))(jss(styles)(Tabs))

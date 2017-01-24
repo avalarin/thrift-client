@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { React, connect, jss } from '~/deps'
 import { hideModal } from '~/actions/modals'
 import { isVisible } from '~/selectors/modals'
 import classNames from 'classnames'
-import jss from 'react-jss'
 
 const styles = {
     backdrop: {
@@ -51,14 +49,25 @@ const styles = {
     }
 }
 
-class Modal extends Component {
+const mapStateToProps = (state, ownProps) => ({
+    isVisible: isVisible(state, ownProps.name)
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onClose: () => dispatch(hideModal(ownProps.name))
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
+@jss(styles)
+export default class Modal extends React.Component {
     render() {
         const { isVisible, name, header, children, sheet: {classes},
                 onClose } = this.props
 
-        var cn = {}
-        cn[classes.backdrop] = true
-        cn[classes.backdropVisible] = isVisible
+        let cn = {
+            [classes.backdrop]: true,
+            [classes.backdropVisible]: isVisible
+        }
 
         return <div className={classNames(cn)}>
             <div className={classes.dialog}>
@@ -73,10 +82,3 @@ class Modal extends Component {
         </div>
     }
 }
-
-
-export default connect((state, ownProps) => ({
-    isVisible: isVisible(state, ownProps.name)
-}), (dispatch, ownProps) => ({
-    onClose: () => dispatch(hideModal(ownProps.name))
-}))(jss(styles)(Modal))
